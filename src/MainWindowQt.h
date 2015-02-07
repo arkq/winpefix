@@ -1,12 +1,12 @@
-// MainWindow.h
+// MainWindowQt.h
 // Copyright (c) 2015 Arkadiusz Bokowy
 //
 // This file is a part of an WinPEFix.
 //
 // This projected is licensed under the terms of the MIT license.
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAINWINDOWQT_H
+#define MAINWINDOWQT_H
 
 #include <QApplication>
 #include <QMainWindow>
@@ -42,4 +42,4 @@ private:
 
 };
 
-#endif  // MAINWINDOW_H
+#endif  // MAINWINDOWQT_H

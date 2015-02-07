@@ -6,22 +6,30 @@ TEMPLATE = app
 TARGET = winpefix
 VERSION = 1.0
 
-CONFIG += qt
 CONFIG += c++11
 
-QT += core gui
-QT += widgets
+SOURCES += \
+	src/main.cpp
 
 unix {
 	QMAKE_CXXFLAGS += -std=c++11
+
+	CONFIG += qt
+	QT += core gui
+	QT += widgets
+
+	HEADERS += src/MainWindowQt.h
+	SOURCES += src/MainWindowQt.cpp
+	FORMS += ui/MainWindow.ui
 }
 
-HEADERS += \
-	src/MainWindow.h
+win32 {
+	DEFINES += WIN32
+	LIBS += -lcomdlg32 -lshlwapi
 
-SOURCES += \
-	src/MainWindow.cpp \
-	src/main.cpp
-
-FORMS += \
-	ui/MainWindow.ui
+	HEADERS += \
+		src/MainWindowWin.h \
+		src/resource.h
+	SOURCES += src/MainWindowWin.cpp
+	RC_FILE = ui/MainWindow.rc
+}

@@ -1,4 +1,4 @@
-// MainWindow.cpp
+// MainWindowQt.cpp
 // Copyright (c) 2015 Arkadiusz Bokowy
 //
 // This file is a part of an WinPEFix.
@@ -7,7 +7,7 @@
 
 #include "QFileDialog"
 
-#include "MainWindow.h"
+#include "MainWindowQt.h"
 #include "ui_MainWindow.h"
 
 
@@ -54,7 +54,7 @@ void MainWindow::process() {
 void MainWindow::consoleLog(const QString &message) {
 	QString log = message.trimmed();
 	if (!log.isEmpty())
-		ui->plainTextEdit->appendPlainText(log); 
+		ui->plainTextEdit->appendPlainText(log);
 }
 
 void MainWindow::consoleClear() {
