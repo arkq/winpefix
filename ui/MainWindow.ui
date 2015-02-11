@@ -14,7 +14,9 @@
    <string>WinPEFix</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="application-x-desktop"/>
+   <iconset theme="application-x-desktop">
+    <normaloff/>
+   </iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -25,7 +27,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="4">
+    <item row="0" column="0" rowspan="3">
      <widget class="QPlainTextEdit" name="plainTextEdit">
       <property name="lineWrapMode">
        <enum>QPlainTextEdit::NoWrap</enum>
@@ -39,13 +41,6 @@
      <widget class="QPushButton" name="processPushButton">
       <property name="text">
        <string>Process</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QCheckBox" name="overwriteCheckBox">
-      <property name="text">
-       <string>Overwrite</string>
       </property>
      </widget>
     </item>

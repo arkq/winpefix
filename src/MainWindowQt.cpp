@@ -5,10 +5,10 @@
 //
 // This projected is licensed under the terms of the MIT license.
 
-#include "QFileDialog"
-
 #include "MainWindowQt.h"
 #include "ui_MainWindow.h"
+
+#include <QFileDialog>
 
 
 MainWindow::MainWindow(QApplication &app, QWidget *parent) :
@@ -39,16 +39,24 @@ void MainWindow::selectFiles() {
 
 	enableProcessing(true);
 
+	consoleLog("Selected files:");
 	for (auto i = files.begin(); i != files.end(); i++)
-		consoleLog("Selected file: " + *i);
+		consoleLog("  - " + *i);
 
 }
 
 void MainWindow::process() {
+
+	consoleLog("Processing...");
 	for (auto i = files.begin(); i != files.end(); i++) {
-		consoleLog("Processing file: " + *i);
+		consoleLog("  - " + *i);
 
 	}
+
+	files.clear();
+	enableProcessing(false);
+	consoleLog("Done.");
+
 }
 
 void MainWindow::consoleLog(const QString &message) {
@@ -63,5 +71,4 @@ void MainWindow::consoleClear() {
 
 void MainWindow::enableProcessing(bool enabled) {
 	ui->processPushButton->setEnabled(enabled);
-	ui->overwriteCheckBox->setEnabled(enabled);
 }

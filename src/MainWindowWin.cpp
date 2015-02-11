@@ -5,12 +5,13 @@
 //
 // This projected is licensed under the terms of the MIT license.
 
-#include <algorithm>
+#include "MainWindowWin.h"
 
+#include <algorithm>
 #include <shlwapi.h>
 #include <windowsx.h>
 
-#include "MainWindowWin.h"
+#include "PELinkFix.h"
 
 using std::sort;
 using std::unique;
@@ -24,7 +25,6 @@ MainWindow::MainWindow(LPCTSTR lpTemplateName) :
 
 	hWndSelectButon = GetDlgItem(dialog(), IDC_SELECT);
 	hWndProcessButton = GetDlgItem(dialog(), IDC_PROCESS);
-	hWndCheckbox = GetDlgItem(dialog(), IDC_OVERWRITE);
 	hWndEditbox = GetDlgItem(dialog(), IDC_TEXT);
 
 	enableProcessing(FALSE);
@@ -103,21 +103,24 @@ VOID MainWindow::selectFiles() {
 
 	enableProcessing(TRUE);
 
-	TCHAR message[MAX_PATH];
-	for (auto i = lfiles.begin(); i != lfiles.end(); i++) {
-		wsprintf(message, TEXT("Selected file: %s"), (*i).c_str());
-		consoleLog(message);
-	}
+	consoleLog(TEXT("Selected files:"));
+	for (auto i = lfiles.begin(); i != lfiles.end(); i++)
+		consoleLog((TEXT("  - ") + *i).c_str());
 
 }
 
 VOID MainWindow::process() {
-	TCHAR message[MAX_PATH];
+
+	consoleLog(TEXT("Processing..."));
 	for (auto i = files.begin(); i != files.end(); i++) {
-		wsprintf(message, TEXT("Processing file: %s"), (*i).c_str());
-		consoleLog(message);
+		consoleLog((TEXT("  - ") + *i).c_str());
 
 	}
+
+	files.clear();
+	enableProcessing(FALSE);
+	consoleLog(TEXT("Done."));
+
 }
 
 VOID MainWindow::consoleLog(LPCTSTR message) {
@@ -163,11 +166,6 @@ VOID MainWindow::maintainLayout(INT width, INT height) {
 		ScreenToClient(dialog(), &pt);
 		SetWindowPos(hWndProcessButton, 0, pt.x + dx, pt.y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
-		GetWindowRect(hWndCheckbox, &rect);
-		pt.x = rect.left; pt.y = rect.top;
-		ScreenToClient(dialog(), &pt);
-		SetWindowPos(hWndCheckbox, 0, pt.x + dx, pt.y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-
 		GetWindowRect(hWndEditbox, &rect);
 		pt.x = rect.right - rect.left;
 		pt.y = rect.bottom - rect.top;
@@ -180,9 +178,4 @@ VOID MainWindow::maintainLayout(INT width, INT height) {
 
 VOID MainWindow::enableProcessing(BOOL enabled) {
 	EnableWindow(hWndProcessButton, enabled);
-	EnableWindow(hWndCheckbox, enabled);
-}
-
-BOOL MainWindow::isOverwriteMode() {
-	return SendMessage(hWndCheckbox, BM_GETCHECK, 0, 0) == BST_CHECKED;
 }

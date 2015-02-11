@@ -24,70 +24,6 @@ using std::vector;
 		OutputDebugString(b); } while(0)
 
 
-#if 0
-template <class T>
-class Window {
-public:
-	static LRESULT CALLBACK windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-		T *pThis = NULL;
-
-		if (uMsg == WM_NCCREATE) {
-			CREATESTRUCT *pCreate = (CREATESTRUCT *)lParam;
-			pThis = (T *)pCreate->lpCreateParams;
-			pThis->hWnd = hWnd;
-			SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)pThis);
-		}
-		else
-			pThis = (T *)GetWindowLongPtr(hWnd, GWLP_USERDATA);
-
-		if (pThis)
-			return pThis->handleMessage(uMsg, wParam, lParam);
-		return DefWindowProc(hWnd, uMsg, wParam, lParam);
-	}
-
-	Window() : hWnd(NULL) { }
-	~Window() { DestroyWindow(hWnd); }
-
-	BOOL create(PCWSTR lpWindowName, DWORD dwStyle,
-			DWORD dwExStyle = 0,
-			int x = CW_USEDEFAULT,
-			int y = CW_USEDEFAULT,
-			int nWidth = CW_USEDEFAULT,
-			int nHeight = CW_USEDEFAULT,
-			HWND hWndParent = NULL,
-			HMENU hMenu = NULL) {
-
-		WNDCLASS wc = { 0 };
-
-		wc.lpfnWndProc = T::windowProc;
-		wc.hInstance = GetModuleHandle(NULL);
-		wc.lpszClassName = className();
-
-		RegisterClass(&wc);
-
-		hWnd = CreateWindowEx(dwExStyle, wc.lpszClassName, lpWindowName, dwStyle,
-				x, y, nWidth, nHeight, hWndParent, hMenu, wc.hInstance, this);
-
-		return hWnd ? TRUE : FALSE;
-	}
-
-	BOOL show(int nCmdShow) {
-		return ShowWindow(hWnd, nCmdShow);
-	}
-
-	HWND window() const { return hWnd; }
-
-protected:
-	virtual PCWSTR  className() const = 0;
-	virtual LRESULT handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) = 0;
-
-private:
-	HWND hWnd;
-
-};
-#endif
-
-
 template <class T>
 class Dialog {
 public:
@@ -172,7 +108,6 @@ public:
 protected:
 	VOID maintainLayout(INT width, INT height);
 	VOID enableProcessing(BOOL enabled);
-	BOOL isOverwriteMode();
 
 private:
 	INT prevWidth, prevHeight;
@@ -180,7 +115,6 @@ private:
 
 	HWND hWndSelectButon;
 	HWND hWndProcessButton;
-	HWND hWndCheckbox;
 	HWND hWndEditbox;
 
 };

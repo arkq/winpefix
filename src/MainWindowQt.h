@@ -33,7 +33,6 @@ public slots:
 
 protected:
 	void enableProcessing(bool enabled);
-	bool isOverwriteMode();
 
 private:
 	Ui::MainWindow *ui;

@@ -21,6 +21,5 @@
 #define IDC_TEXT       40000
 #define IDC_SELECT     40001
 #define IDC_PROCESS    40002
-#define IDC_OVERWRITE  40003
 
 #endif  // VERSION_H
