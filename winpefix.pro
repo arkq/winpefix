@@ -8,7 +8,12 @@ VERSION = 1.0
 
 CONFIG += c++11
 
+HEADERS += \
+	src/PELinkFix.h \
+	src/mswinpe.h
+
 SOURCES += \
+	src/PELinkFix.cpp \
 	src/main.cpp
 
 unix {

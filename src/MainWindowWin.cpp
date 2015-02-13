@@ -17,6 +17,32 @@ using std::sort;
 using std::unique;
 
 
+namespace acp {
+	/* Strings encoding is a portability nightmare, specially when it comes to
+	 * Windows. In order to keep core engine as much universal as possible, we
+	 * need to convert between wide characters and narrow ones. */
+
+	std::string encode(const std::wstring &wstr) {
+		if (wstr.empty())
+			return std::string();
+		int size = WideCharToMultiByte(CP_THREAD_ACP, 0, &wstr[0], wstr.size(), NULL, 0, NULL, NULL);
+		std::string str(size, 0);
+		WideCharToMultiByte(CP_THREAD_ACP, 0, &wstr[0], wstr.size(), &str[0], size, NULL, NULL);
+		return str;
+	}
+
+	std::wstring decode(const std::string &str) {
+		if (str.empty())
+			return std::wstring();
+		int size = MultiByteToWideChar(CP_THREAD_ACP, 0, &str[0], str.size(), NULL, 0);
+		std::wstring wstr (size, 0);
+		MultiByteToWideChar(CP_THREAD_ACP, 0, &str[0], str.size(), &wstr[0], size);
+		return wstr;
+	}
+
+}
+
+
 MainWindow::MainWindow(LPCTSTR lpTemplateName) :
 		prevWidth(0),
 		prevHeight(0) {
@@ -105,7 +131,7 @@ VOID MainWindow::selectFiles() {
 
 	consoleLog(TEXT("Selected files:"));
 	for (auto i = lfiles.begin(); i != lfiles.end(); i++)
-		consoleLog((TEXT("  - ") + *i).c_str());
+		consoleLog((TEXT(" - ") + *i).c_str());
 
 }
 
@@ -113,8 +139,11 @@ VOID MainWindow::process() {
 
 	consoleLog(TEXT("Processing..."));
 	for (auto i = files.begin(); i != files.end(); i++) {
-		consoleLog((TEXT("  - ") + *i).c_str());
+		consoleLog((TEXT(" - ") + *i).c_str());
 
+		PELinkFix pe(acp::encode(*i).c_str());
+		if (!pe.process())
+			consoleLog((TEXT("error: ") + acp::decode(pe.getErrorString())).c_str());
 	}
 
 	files.clear();

@@ -10,6 +10,8 @@
 
 #include <QFileDialog>
 
+#include "PELinkFix.h"
+
 
 MainWindow::MainWindow(QApplication &app, QWidget *parent) :
 		QMainWindow(parent),
@@ -41,7 +43,7 @@ void MainWindow::selectFiles() {
 
 	consoleLog("Selected files:");
 	for (auto i = files.begin(); i != files.end(); i++)
-		consoleLog("  - " + *i);
+		consoleLog(" - " + *i);
 
 }
 
@@ -49,8 +51,11 @@ void MainWindow::process() {
 
 	consoleLog("Processing...");
 	for (auto i = files.begin(); i != files.end(); i++) {
-		consoleLog("  - " + *i);
+		consoleLog(" - " + *i);
 
+		PELinkFix pe((*i).toLocal8Bit().constData());
+		if (!pe.process())
+			consoleLog(QString::fromStdString("error: " + pe.getErrorString()));
 	}
 
 	files.clear();
