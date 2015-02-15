@@ -25,18 +25,22 @@ namespace acp {
 	std::string encode(const std::wstring &wstr) {
 		if (wstr.empty())
 			return std::string();
-		int size = WideCharToMultiByte(CP_THREAD_ACP, 0, &wstr[0], wstr.size(), NULL, 0, NULL, NULL);
+		int size = WideCharToMultiByte(CP_THREAD_ACP, 0, &wstr[0],
+				(int)wstr.size(), NULL, 0, NULL, NULL);
 		std::string str(size, 0);
-		WideCharToMultiByte(CP_THREAD_ACP, 0, &wstr[0], wstr.size(), &str[0], size, NULL, NULL);
+		WideCharToMultiByte(CP_THREAD_ACP, 0, &wstr[0],
+				(int)wstr.size(), &str[0], size, NULL, NULL);
 		return str;
 	}
 
 	std::wstring decode(const std::string &str) {
 		if (str.empty())
 			return std::wstring();
-		int size = MultiByteToWideChar(CP_THREAD_ACP, 0, &str[0], str.size(), NULL, 0);
+		int size = MultiByteToWideChar(CP_THREAD_ACP, 0, &str[0],
+				(int)str.size(), NULL, 0);
 		std::wstring wstr (size, 0);
-		MultiByteToWideChar(CP_THREAD_ACP, 0, &str[0], str.size(), &wstr[0], size);
+		MultiByteToWideChar(CP_THREAD_ACP, 0, &str[0],
+				(int)str.size(), &wstr[0], size);
 		return wstr;
 	}
 

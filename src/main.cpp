@@ -15,6 +15,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	MainWindow window(MAKEINTRESOURCE(1));
+	window.setIcon(LoadIcon(hInstance, MAKEINTRESOURCE(1)));
 	window.useDefaultPosition();
 	window.show(nCmdShow);
 

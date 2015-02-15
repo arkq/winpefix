@@ -79,6 +79,10 @@ public:
 				0, 0, SWP_NOSIZE | SWP_NOZORDER);
 	}
 
+	HICON setIcon(HICON hIcon) {
+		return (HICON)SendMessage(hDlg, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+	}
+
 	BOOL show(INT nCmdShow) {
 		return ShowWindow(hDlg, nCmdShow);
 	}
