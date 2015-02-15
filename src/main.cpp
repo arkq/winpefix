@@ -33,10 +33,21 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 #include <QApplication>
 #include "MainWindowQt.h"
+#include "PELinkFix.h"
 
 int main(int argc, char *argv[]) {
 
 	QApplication app(argc, argv);
+
+	QStringList args = QCoreApplication::arguments();
+	if (args.size() > 1) { // command line mode
+		for (auto i = args.begin() + 1; i != args.end(); i++) {
+			PELinkFix pe((*i).toLocal8Bit().constData());
+			if (!pe.process())
+				qCritical("error: %s", pe.getErrorString().c_str());
+		}
+		return 0;
+	}
 
 	MainWindow window(app);
 	window.show();
