@@ -3,7 +3,7 @@
 //
 // This file is a part of an WinPEFix.
 //
-// This projected is licensed under the terms of the MIT license.
+// This project is licensed under the terms of the MIT license.
 //
 // This file contains structures used in the Windows Portable Executable (PE)
 // file format. Those structures are defined in the header files available on
