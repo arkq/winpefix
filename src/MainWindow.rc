@@ -1,16 +1,14 @@
 // MainWindow.rc
-// Copyright (c) 2015 Arkadiusz Bokowy
+// Copyright (c) 2015-2018 Arkadiusz Bokowy
 //
-// This file is a part of an WinPEFix.
+// This file is a part of WinPEFix.
 //
 // This project is licensed under the terms of the MIT license.
 
 #include <windows.h>
 #include "../src/resource.h"
 
-
-1 ICON DISCARDABLE "winpefix.ico"
-
+1 ICON DISCARDABLE "../winpefix.ico"
 
 1 DIALOGEX 0, 0, 256, 100
 STYLE DS_SETFONT | WS_CAPTION | WS_VISIBLE | WS_MINIMIZEBOX | WS_THICKFRAME | WS_SYSMENU

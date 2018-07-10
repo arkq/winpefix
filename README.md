@@ -26,10 +26,10 @@ beyond targeting issue.
 Compilation
 -----------
 
-In order to compile this tool, one has to have access to a box with Qt build
-tools installed (e.g. Qt Creator for Windows). On Windows system, there are
-no external dependencies required (Qt is used for building purpose only), so
-once program is compiled, it should run from anywhere.
+In order to compile this tool, one has to have access to a box with a CMake
+and compiler with C++11 support. On Windows system, there are no external
+dependencies required, so once the program is compiled, it should run from
+anywhere. On other platforms Qt is used for user interface.
 
 
 Usage
