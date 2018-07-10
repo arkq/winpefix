@@ -1,7 +1,7 @@
 // mswinpe.cpp
-// Copyright (c) 2015 Arkadiusz Bokowy
+// Copyright (c) 2015-2018 Arkadiusz Bokowy
 //
-// This file is a part of an WinPEFix.
+// This file is a part of WinPEFix.
 //
 // This project is licensed under the terms of the MIT license.
 //
@@ -10,8 +10,8 @@
 // Windows platform, however due to portability reasons we are forced to keep
 // a copy of them here.
 
-#ifndef WINPEH_H
-#define WINPEH_H
+#ifndef WINPEFIX_MSWINPE_H_
+#define WINPEFIX_MSWINPE_H_
 
 #ifdef WIN32
 
@@ -109,4 +109,4 @@ typedef struct _IMAGE_NT_HEADERS {
 
 #endif  // !WIN32
 
-#endif  // WINPEH_H
+#endif

@@ -1,7 +1,7 @@
 // PELinkFix.cpp
-// Copyright (c) 2015 Arkadiusz Bokowy
+// Copyright (c) 2015-2018 Arkadiusz Bokowy
 //
-// This file is a part of an WinPEFix.
+// This file is a part of WinPEFix.
 //
 // This project is licensed under the terms of the MIT license.
 
@@ -10,10 +10,10 @@
 #include "mswinpe.h"
 
 
-PELinkFix::PELinkFix(string filename) :
+PELinkFix::PELinkFix(std::string filename) :
 		m_filename(filename),
-		m_file(filename.c_str(), fstream::binary | fstream::in | fstream::out),
-		m_error(NoErrorCode) {
+		m_file(filename, std::fstream::binary | std::fstream::in | std::fstream::out),
+		m_error(ErrorCode::NoErrorCode) {
 
 }
 
@@ -29,14 +29,14 @@ bool PELinkFix::process() {
 	return updateSystemVersion();
 }
 
-string PELinkFix::getBackupFileName() const {
+std::string PELinkFix::getBackupFileName() const {
 	return m_filename + ".old";
 }
 
 bool PELinkFix::checkFileFormat() {
 
 	if (!m_file.is_open()) {
-		m_error = FileOpenError;
+		m_error = ErrorCode::FileOpenError;
 		return false;
 	}
 
@@ -62,14 +62,14 @@ bool PELinkFix::checkFileFormat() {
 	return true;
 
 return_invalid:
-	m_error = InvalidPEFormat;
+	m_error = ErrorCode::InvalidPEFormat;
 	return false;
 }
 
 bool PELinkFix::updateSystemVersion() {
 
 	if (!m_file.is_open()) {
-		m_error = FileOpenError;
+		m_error = ErrorCode::FileOpenError;
 		return false;
 	}
 
@@ -104,11 +104,11 @@ bool PELinkFix::updateSystemVersion() {
 
 bool PELinkFix::createBackupFile() {
 
-	const char *fileName = getBackupFileName().c_str();
-	std::ofstream newFile(fileName, fstream::binary | fstream::trunc);
+	std::string fileName = getBackupFileName();
+	std::ofstream newFile(fileName, std::fstream::binary | std::fstream::trunc);
 
 	if (!newFile.is_open()) {
-		m_error = CreateBackupError;
+		m_error = ErrorCode::CreateBackupError;
 		return false;
 	}
 
@@ -118,15 +118,15 @@ bool PELinkFix::createBackupFile() {
 	return true;
 }
 
-string PELinkFix::getErrorString() {
+std::string PELinkFix::getErrorString() {
 	switch (m_error) {
-	case FileOpenError:
-		return "unable to open file for read and write";
-	case CreateBackupError:
-		return "unable to create backup file";
-	case InvalidPEFormat:
-		return "not a PE format";
+	case ErrorCode::FileOpenError:
+		return "Unable to open file for read and write";
+	case ErrorCode::CreateBackupError:
+		return "Unable to create backup file";
+	case ErrorCode::InvalidPEFormat:
+		return "Not a PE format";
 	default:
-		return "no error";
+		return "No error";
 	}
 }

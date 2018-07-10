@@ -1,40 +1,36 @@
 // PELinkFix.h
-// Copyright (c) 2015 Arkadiusz Bokowy
+// Copyright (c) 2015-2018 Arkadiusz Bokowy
 //
-// This file is a part of an WinPEFix.
+// This file is a part of WinPEFix.
 //
 // This project is licensed under the terms of the MIT license.
 
-#ifndef PELINKFIX_H
-#define PELINKFIX_H
+#ifndef WINPEFIX_PELINKFIX_H_
+#define WINPEFIX_PELINKFIX_H_
 
 #include <fstream>
 #include <string>
 
-using std::fstream;
-using std::string;
-
-
 class PELinkFix {
 public:
 
-	enum ErrorCode {
+	enum class ErrorCode {
 		NoErrorCode = 0,
 		FileOpenError,
 		CreateBackupError,
 		InvalidPEFormat,
 	};
 
-	PELinkFix(string filename);
+	PELinkFix(std::string filename);
 	~PELinkFix();
 
 	bool process();
 
 	ErrorCode getErrorCode() const { return m_error; };
-	string getErrorString();
+	std::string getErrorString();
 
-	const string &getFileName() const { return m_filename; }
-	string getBackupFileName() const;
+	const std::string &getFileName() const { return m_filename; }
+	std::string getBackupFileName() const;
 
 protected:
 	bool checkFileFormat();
@@ -42,10 +38,10 @@ protected:
 	bool createBackupFile();
 
 private:
-	string m_filename;
-	fstream m_file;
+	std::string m_filename;
+	std::fstream m_file;
 	ErrorCode m_error;
 
 };
 
-#endif  // PELINKFIX_H
+#endif

@@ -6,7 +6,7 @@
 // This project is licensed under the terms of the MIT license.
 
 #include <windows.h>
-#include "../src/resource.h"
+#include "resource.h"
 
 1 ICON DISCARDABLE "../winpefix.ico"
 
@@ -20,7 +20,6 @@ BEGIN
 	PUSHBUTTON "Process", IDC_PROCESS, 199, 20, 55, 16, BS_CENTER | BS_VCENTER, WS_EX_LEFT
 	EDITTEXT IDC_TEXT, 2, 2, 195, 96, WS_VSCROLL | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE | ES_READONLY | ES_WANTRETURN, WS_EX_LEFT
 END
-
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION VER_FILEVERSION
