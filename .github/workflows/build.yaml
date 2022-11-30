@@ -1,0 +1,32 @@
+name: Build and Test
+
+on:
+  push:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        build-type: [ Release ]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt update
+        sudo apt install --yes --quiet --no-install-recommends \
+          qtbase5-dev
+    - name: Configure CMake
+      run: cmake -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -B build
+    - name: Build
+      run: cmake --build ${{ github.workspace }}/build --config ${{ matrix.build-type }}
+    - uses: actions/upload-artifact@v3
+      with:
+        name: winpefix-${{ matrix.os }}
+        path: build/**/bin
